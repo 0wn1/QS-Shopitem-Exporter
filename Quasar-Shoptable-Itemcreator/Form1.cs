@@ -23,24 +23,13 @@ namespace Quasar_Shoptable_Itemcreator
             {
                 checkBox2.Checked = false;
             }
-            else
-            {
-
-            }
-
-
-
         }
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox2.Checked == true)
             {
                 checkBox1.Checked = false;
-            }
-            else
-            {
-
-            }
+            }           
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -63,7 +52,7 @@ namespace Quasar_Shoptable_Itemcreator
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                MessageBox.Show("Não há valor para o campo 'Nome'", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Não há valor para o campo 'Item'", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -104,7 +93,7 @@ namespace Quasar_Shoptable_Itemcreator
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
             richTextBox1.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            richTextBox1.ForeColor = System.Drawing.Color.White;
+            richTextBox1.ForeColor = System.Drawing.Color.AntiqueWhite;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -124,14 +113,23 @@ namespace Quasar_Shoptable_Itemcreator
 
         private void button4_Click(object sender, EventArgs e)
         {
+            if (richTextBox1.Text == "")
+            {
+            MessageBox.Show("Não há o que copiar para área de transferência", "Aviso",
+            MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return;
+            }
+            else
+            {
             StringBuilder sb = new StringBuilder();
 
             foreach (string line in richTextBox1.Lines)
             sb.AppendLine(line);
             Clipboard.SetText(sb.ToString());
 
-            MessageBox.Show("Copiado para área de transferência", "Área de transferência",
+            MessageBox.Show("Copiado para área de transferência", "Sucesso",
             MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }
