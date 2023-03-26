@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using FastColoredTextBoxNS;
+using System;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Quasar_Shoptable_Itemcreator
@@ -16,20 +10,25 @@ namespace Quasar_Shoptable_Itemcreator
         public Form1()
         {
             InitializeComponent();
+            fastColoredTextBox1.Language = Language.Lua;
+            //fastColoredTextBox1.Font = new Font("Consolas", 12F);
+            //fastColoredTextBox1.ForeColor = Color.AntiqueWhite;
         }
+
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox1.Checked == true)
+            if (checkBox1.Checked)
             {
                 checkBox2.Checked = false;
             }
         }
+
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox2.Checked == true)
+            if (checkBox2.Checked)
             {
                 checkBox1.Checked = false;
-            }           
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -52,7 +51,7 @@ namespace Quasar_Shoptable_Itemcreator
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                MessageBox.Show("Não há valor para o campo 'Item'", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("There is no value for the 'Item' field", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -67,17 +66,15 @@ namespace Quasar_Shoptable_Itemcreator
                 "}},",
                 tableNumber, name, price, amount, item, slot);
 
-            richTextBox1.AppendText(luaTable + Environment.NewLine);
+            fastColoredTextBox1.AppendText(luaTable + Environment.NewLine);
             numericUpDown3.UpButton();
             numericUpDown4.UpButton();
         }
 
-
-
         private void button2_Click(object sender, EventArgs e)
         {
             textBox1.Clear();
-            richTextBox1.Clear();
+            fastColoredTextBox1.Clear();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -85,50 +82,25 @@ namespace Quasar_Shoptable_Itemcreator
             Application.Exit();
         }
 
-        private void textBox6_TextChanged(object sender, EventArgs e)
+        private void fastColoredTextBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
-
-        }
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-            richTextBox1.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            richTextBox1.ForeColor = System.Drawing.Color.AntiqueWhite;
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void numericUpDown3_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void numericUpDown4_ValueChanged(object sender, EventArgs e)
-        {
-
+            fastColoredTextBox1.Font = new Font("Consolas", 12F);
+            fastColoredTextBox1.ForeColor = Color.AntiqueWhite;
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (richTextBox1.Text == "")
+            if (fastColoredTextBox1.Text == "")
             {
-            MessageBox.Show("Não há o que copiar para área de transferência", "Aviso",
-            MessageBoxButtons.OK, MessageBoxIcon.Information);
-            return;
+                MessageBox.Show("There is nothing to copy to clipboard", "Warning",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
             else
             {
-            StringBuilder sb = new StringBuilder();
-
-            foreach (string line in richTextBox1.Lines)
-            sb.AppendLine(line);
-            Clipboard.SetText(sb.ToString());
-
-            MessageBox.Show("Copiado para área de transferência", "Sucesso",
-            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Clipboard.SetText(fastColoredTextBox1.Text);
+                MessageBox.Show("Copied to clipboard", "Success",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }
